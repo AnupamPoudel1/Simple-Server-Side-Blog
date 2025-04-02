@@ -1,14 +1,10 @@
-import BlogCard from "./components/BlogCard";
+import BlogCard from "@/components/BlogCard";
 
 type BlogType = {
   id: number;
   title: string;
   body: string;
   tags: string[];
-};
-
-type HomeProps = {
-  blogs: BlogType[];
 };
 
 export default async function Home() {
@@ -23,7 +19,7 @@ export default async function Home() {
     }
   };
 
-  const blogs = await getBlogs();
+  const blogs: BlogType[] = await getBlogs();
 
   return (
     <main className="w-full flex flex-col justify-center items-center px-10 py-10">
@@ -33,7 +29,14 @@ export default async function Home() {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-x-5 gap-y-10 mt-10">
         {blogs.length > 0 ? (
           blogs.map((blog: any, index: any) => {
-            return <BlogCard key={index} title={blog.title} body={blog.body} />;
+            return (
+              <BlogCard
+                key={index}
+                title={blog.title}
+                body={blog.body}
+                blogpostLink={`blogpost/${blog.id}`}
+              />
+            );
           })
         ) : (
           <div>No Blogs Found</div>
